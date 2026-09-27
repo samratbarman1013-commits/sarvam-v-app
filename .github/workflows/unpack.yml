@@ -3,7 +3,7 @@ name: Unpack artifacts
 on:
   push:
     paths:
-      - '**/*.gz.b64'
+      - '**/*.b64'
   workflow_dispatch:
 
 permissions:
@@ -16,14 +16,21 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unpack and commit
         run: |
-          if [ -f SarvamV.apk.gz.b64 ] && [ -f editor.html.gz.b64 ]; then
-            gunzip -c SarvamV.apk.gz.b64 > SarvamV.apk
+          if [ -f SarvamV.apk.gz.p1.b64 ] && [ -f SarvamV.apk.gz.p2.b64 ] && [ -f SarvamV.apk.gz.p3.b64 ] && [ -f SarvamV.apk.gz.p4.b64 ] && [ -f SarvamV.apk.gz.p5.b64 ] && [ -f SarvamV.apk.gz.p6.b64 ] && [ -f editor.html.gz.b64 ]; then
+            echo "63a657baa597ce832c2ca0e92400807c4a39fc2ed39f4559728daad882d592e0  SarvamV.apk.gz.p1.b64" | sha256sum -c -
+            echo "2fb1dc28ffb5cd3fe1966dce3bd931f510106041557fbbbef36a724fbb5dbcdc  SarvamV.apk.gz.p2.b64" | sha256sum -c -
+            echo "adabe256b6121464f1b5439b311bbe532ad99b61becc12ac7395dd4b02618c22  SarvamV.apk.gz.p3.b64" | sha256sum -c -
+            echo "c7877ae659d5d77e22de3a36cfd1d161076d5c47dc281733ab75e2995b5cc5eb  SarvamV.apk.gz.p4.b64" | sha256sum -c -
+            echo "d8679f5dab366649699916efa21a689743722a1d62444bd42fe9cd2c9ae90120  SarvamV.apk.gz.p5.b64" | sha256sum -c -
+            echo "f0221819329376e082eb8594fea73fae5ed2fdf756ad26bf44bd0b1926ca3bd2  SarvamV.apk.gz.p6.b64" | sha256sum -c -
+            cat SarvamV.apk.gz.p1.b64 SarvamV.apk.gz.p2.b64 SarvamV.apk.gz.p3.b64 SarvamV.apk.gz.p4.b64 SarvamV.apk.gz.p5.b64 SarvamV.apk.gz.p6.b64 > SarvamV.apk.gz
+            gunzip -c SarvamV.apk.gz > SarvamV.apk
             gunzip -c editor.html.gz.b64 > editor.html
             echo "b87f5bb265b30c9bf62c6d0e85fcfdc84ab8b739c8619ac33ce124ce975b0db0  SarvamV.apk" | sha256sum -c -
             echo "867f6fec0646f59c24ceb721498b7b2e2a392e5a935207b29e4ec032c41ac136  editor.html" | sha256sum -c -
             git config user.name "sarvam-v-bot"
             git config user.email "actions@github.com"
-            git rm -q SarvamV.apk.gz.b64 editor.html.gz.b64
+            git rm -q --ignore-unmatch SarvamV.apk.gz.b64 SarvamV.apk.gz.p1.b64 SarvamV.apk.gz.p2.b64 SarvamV.apk.gz.p3.b64 SarvamV.apk.gz.p4.b64 SarvamV.apk.gz.p5.b64 SarvamV.apk.gz.p6.b64 editor.html.gz.b64
             git add SarvamV.apk editor.html
             git commit -m "release: unpack SarvamV.apk and editor.html"
             git push
