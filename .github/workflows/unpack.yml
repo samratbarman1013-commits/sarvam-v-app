@@ -17,8 +17,8 @@ jobs:
       - name: Unpack and commit
         run: |
           if [ -f SarvamV.apk.gz.b64 ] && [ -f editor.html.gz.b64 ]; then
-            base64 -d SarvamV.apk.gz.b64 | gunzip > SarvamV.apk
-            base64 -d editor.html.gz.b64 | gunzip > editor.html
+            gunzip -c SarvamV.apk.gz.b64 > SarvamV.apk
+            gunzip -c editor.html.gz.b64 > editor.html
             echo "b87f5bb265b30c9bf62c6d0e85fcfdc84ab8b739c8619ac33ce124ce975b0db0  SarvamV.apk" | sha256sum -c -
             echo "867f6fec0646f59c24ceb721498b7b2e2a392e5a935207b29e4ec032c41ac136  editor.html" | sha256sum -c -
             git config user.name "sarvam-v-bot"
